@@ -37,5 +37,23 @@ public class Main {
 
     }
 
+    private static void openAccount(Scanner sc) {
+    }
+
+    private static void deposit(Scanner sc) {
+    }
+
+    private static void withdraw(Scanner sc) {
+    }
+
+    private static void transfer(Scanner sc) {
+    }
+
+    private static void statement(Scanner sc) {
+    }
+
+    private static void searchAccount(Scanner sc) {
+    }
+
 
 }
