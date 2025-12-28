@@ -38,6 +38,15 @@ public class Main {
     }
 
     private static void openAccount(Scanner sc) {
+        System.out.println("Customer Name : ");
+        String name = sc.nextLine().trim();
+        System.out.println("Customer Email : ");
+        String email = sc.nextLine().trim();
+        System.out.println("Account Type (SAVINGS / CURRENT");
+        String type = sc.nextLine().trim();
+        System.out.println("Initial deposit (optional , blank for 0) ");
+        String amountStr = sc.nextLine().trim();
+        Double initial = Double.valueOf(amountStr);
     }
 
     private static void deposit(Scanner sc) {
