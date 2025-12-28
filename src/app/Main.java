@@ -23,6 +23,12 @@ public class Main {
             System.out.println("Your choice is " + choice);
 
             switch (choice) {
+                case "1" -> openAccount(sc);
+                case "2" -> deposit(sc);
+                case "3" -> withdraw(sc);
+                case "4" -> transfer(sc);
+                case "5" -> statement(sc);
+                case "6" -> searchAccount(sc);
                 case "0" -> running = false;
             }
         }
@@ -30,4 +36,6 @@ public class Main {
 
 
     }
+
+
 }
