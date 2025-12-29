@@ -19,7 +19,7 @@ public class BankServiceImpl implements BankService {
         // CHANGE LATER --> 10 + 1 = AC11
 //        String accountNumber = UUID.randomUUID().toString();
         String accountNumber = getAccountNumber();
-        Account account = new Account(accountNumber , accountType ,0,customerId);
+        Account account = new Account(accountNumber , accountType , (double) 0,customerId);
 
         //SAVE
         accountRepository.saveAccount(account);
@@ -36,6 +36,6 @@ public class BankServiceImpl implements BankService {
 
     private String getAccountNumber() {
         int size = accountRepository.findAll().size() + 1;
-        return String.format("AC%06D" , size);
+        return String.format("AC%06d" , size);
     }
 }

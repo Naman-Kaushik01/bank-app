@@ -32,7 +32,8 @@ public class Main {
                 case "3" -> withdraw(sc);
                 case "4" -> transfer(sc);
                 case "5" -> statement(sc);
-                case "6" -> searchAccount(sc);
+                case "6" -> listAccounts(sc , bankService);
+                case "7" -> searchAccount(sc);
                 case "0" -> running = false;
             }
         }
@@ -65,7 +66,11 @@ public class Main {
 
     private static void statement(Scanner sc) {
     }
-    private static void listAccounts(Scanner sc) {
+    private static void listAccounts(Scanner sc, BankService bankService) {
+        bankService.listAccounts().forEach(a ->{
+            System.out.println(a.getAccountNumber() + " | " + a.getAccountType() + " | " + a.getBalance());
+        });
+
     }
 
     private static void searchAccount(Scanner sc) {
