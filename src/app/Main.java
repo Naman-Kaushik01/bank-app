@@ -28,7 +28,7 @@ public class Main {
 
             switch (choice) {
                 case "1" -> openAccount(sc , bankService);
-                case "2" -> deposit(sc);
+                case "2" -> deposit(sc , bankService);
                 case "3" -> withdraw(sc);
                 case "4" -> transfer(sc);
                 case "5" -> statement(sc);
@@ -47,15 +47,27 @@ public class Main {
         String name = sc.nextLine().trim();
         System.out.println("Customer Email : ");
         String email = sc.nextLine().trim();
-        System.out.println("Account Type (SAVINGS / CURRENT");
+        System.out.println("Account Type (SAVINGS / CURRENT )");
         String type = sc.nextLine().trim();
         System.out.println("Initial deposit (optional , blank for 0) ");
         String amountStr = sc.nextLine().trim();
         Double initial = Double.valueOf(amountStr);
+        String accountNumber = bankService.openAccount(name,email,type);
+        if(initial > 0){
+            bankService.deposit(accountNumber,initial,"Initial deposit ");
+            System.out.println("Account Opened Successfully , Your Account Number : "+accountNumber);
+        }
+
         bankService.openAccount(name, email, type);
     }
 
-    private static void deposit(Scanner sc) {
+    private static void deposit(Scanner sc ,BankService bankService) {
+        System.out.println("Account Number : ");
+        String accountNumber = sc.nextLine().trim();
+        System.out.println("Amount : ");
+        Double amount = Double.valueOf(sc.nextLine().trim());
+        bankService.deposit(accountNumber , amount , "Deposit");
+        System.out.println("Amount Deposited");
     }
 
     private static void withdraw(Scanner sc) {
