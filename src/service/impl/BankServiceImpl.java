@@ -1,13 +1,16 @@
 package service.impl;
 
 import domain.Account;
+import domain.Customer;
 import domain.Transaction;
 import domain.Type;
 import repository.AccountRepository;
+import repository.CustomerRepository;
 import repository.TransactionRepository;
 import service.BankService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +20,13 @@ public class BankServiceImpl implements BankService {
 
     private final AccountRepository accountRepository = new AccountRepository();
     private final TransactionRepository transactionRepository = new TransactionRepository();
+    private final CustomerRepository customerRepository = new CustomerRepository();
     @Override
     public String openAccount(String name, String email, String accountType) {
+        //Create Customer
         String customerId = UUID.randomUUID().toString();
+        Customer c = new Customer(email , customerId , name);
+        customerRepository.save(c);
 
         // CHANGE LATER --> 10 + 1 = AC11
 //        String accountNumber = UUID.randomUUID().toString();
@@ -91,6 +98,28 @@ public class BankServiceImpl implements BankService {
                 .sorted(Comparator.comparing(Transaction::getTimestamp))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Account> searchAccountByCustomerName(String q) {
+        String query = (q == null) ? "" : q.toLowerCase();
+        List<Account> result = new ArrayList<>();
+        for(Customer c : customerRepository.findALl()){
+            if(c.getName().toLowerCase().contains(query)){
+                result.addAll(accountRepository.findByCustomerID(c.getId()));
+            }
+        }
+      result.sort(Comparator.comparing(Account::getAccountNumber));
+        //Using Streams
+
+//        return customerRepository.findALl().stream()
+//                .filter(c -> c.getName().toLowerCase().contains(q))
+//                .flatMap(c -> accountRepository.findByCustomerID(c.getId()).stream())
+//                .sorted(Comparator.comparing(Account::getAccountNumber))
+//                .collect(Collectors.toList());
+
+        return result;
+    }
+
 
 
     private String getAccountNumber() {
