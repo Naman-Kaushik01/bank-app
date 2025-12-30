@@ -25,7 +25,7 @@ public class BankServiceImpl implements BankService {
     public String openAccount(String name, String email, String accountType) {
         //Create Customer
         String customerId = UUID.randomUUID().toString();
-        Customer c = new Customer(email , customerId , name);
+        Customer c = new Customer(customerId, name, email);
         customerRepository.save(c);
 
         // CHANGE LATER --> 10 + 1 = AC11
