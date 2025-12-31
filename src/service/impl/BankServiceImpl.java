@@ -38,6 +38,12 @@ public class BankServiceImpl implements BankService {
         }
     };
 
+    private final Validation<Double> validateAmountPositive = amount ->{
+        if (amount == null || amount < 0) {
+            throw new ValidationException("Amount must be Valid");
+        }
+    };
+
     @Override
     public String openAccount(String name, String email, String accountType) {
 
