@@ -89,6 +89,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void withdraw(String accountNumber, Double amount, String note) {
+        validateAmountPositive.validate(amount);
         Account account = accountRepository.findByNumber(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException("Account not found :"+accountNumber));
         if(account.getBalance() < amount)
@@ -101,6 +102,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void transfer(String fromAccount, String toAccount, Double amount, String note) {
+        validateAmountPositive.validate(amount);
         if(fromAccount.equals(toAccount))
             throw new ValidationException("From account and To account are the same");
         Account from = accountRepository.findByNumber(fromAccount)
