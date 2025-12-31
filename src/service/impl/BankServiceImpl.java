@@ -11,6 +11,7 @@ import repository.AccountRepository;
 import repository.CustomerRepository;
 import repository.TransactionRepository;
 import service.BankService;
+import util.Validation;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,8 +25,16 @@ public class BankServiceImpl implements BankService {
     private final AccountRepository accountRepository = new AccountRepository();
     private final TransactionRepository transactionRepository = new TransactionRepository();
     private final CustomerRepository customerRepository = new CustomerRepository();
+
+    private final Validation<String> validateName = name ->{
+        if(name == null || name.isBlank()) throw new ValidationException("Name is null or blank");
+    };
+
     @Override
     public String openAccount(String name, String email, String accountType) {
+
+        validateName.validate(name); //Adding validation
+
         //Create Customer
         String customerId = UUID.randomUUID().toString();
         Customer c = new Customer(customerId, name, email);
