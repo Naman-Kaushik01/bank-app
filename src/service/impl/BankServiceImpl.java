@@ -29,12 +29,15 @@ public class BankServiceImpl implements BankService {
     private final Validation<String> validateName = name ->{
         if(name == null || name.isBlank()) throw new ValidationException("Name is null or blank");
     };
+    private final Validation<String> validateEmail = email ->{
+        if(email == null || !email.contains("@")) throw new ValidationException("Email is null or blank");
+    };
 
     @Override
     public String openAccount(String name, String email, String accountType) {
 
         validateName.validate(name); //Adding validation
-
+        validateEmail.validate(email);
         //Create Customer
         String customerId = UUID.randomUUID().toString();
         Customer c = new Customer(customerId, name, email);
