@@ -32,12 +32,18 @@ public class BankServiceImpl implements BankService {
     private final Validation<String> validateEmail = email ->{
         if(email == null || !email.contains("@")) throw new ValidationException("Email is null or blank");
     };
+    private final Validation<String> validateType = type ->{
+        if (type == null || !(type.equalsIgnoreCase("SAVINGS") || type.equalsIgnoreCase("CURRENT"))){
+            throw new ValidationException("Type must be SAVINGS or CURRENT");
+        }
+    };
 
     @Override
     public String openAccount(String name, String email, String accountType) {
 
         validateName.validate(name); //Adding validation
         validateEmail.validate(email);
+        validateType.validate(accountType);
         //Create Customer
         String customerId = UUID.randomUUID().toString();
         Customer c = new Customer(customerId, name, email);
